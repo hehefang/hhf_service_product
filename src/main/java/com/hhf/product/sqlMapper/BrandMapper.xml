@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhf.product.dao.BrandMapper" >
+  <resultMap id="BaseResultMap" type="com.hhf.model.product.Brand" >
+    <result column="brand_id" property="brandId" jdbcType="DECIMAL" />
+    <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    <result column="brand_ename" property="brandEname" jdbcType="VARCHAR" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="brand_abbr" property="brandAbbr" jdbcType="VARCHAR" />
+    <result column="brand_story" property="brandStory" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="create_by_name" property="createByName" jdbcType="VARCHAR" />
+    <result column="pinyin" property="pinyin" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    brand_id, brand_name, brand_ename, logo_url, brand_abbr, brand_story, create_date, 
+    status,create_by_name,pinyin
+  </sql>
+  
+  <insert id="insertBrand" parameterType="com.hhf.model.product.Brand"  useGeneratedKeys="true" keyProperty="brandId" >
+    insert into t_brand (brand_name, brand_ename, 
+      logo_url, brand_abbr, brand_story, 
+      create_date, status, create_by_name, 
+      pinyin)
+    values (#{brandName,jdbcType=VARCHAR}, #{brandEname,jdbcType=VARCHAR}, 
+      #{logoUrl,jdbcType=VARCHAR}, #{brandAbbr,jdbcType=VARCHAR}, #{brandStory,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{createByName,jdbcType=VARCHAR}, 
+      #{pinyin,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="getByBrandId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_BRAND
+    where BRAND_ID = #{brandId,jdbcType=DECIMAL}
+  </select>
+  
+  <insert id="insertSelective" parameterType="com.hhf.model.product.Brand" >
+    insert into t_brand
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="brandId != null" >
+        brand_id,
+      </if>
+      <if test="brandName != null" >
+        brand_name,
+      </if>
+      <if test="brandEname != null" >
+        brand_ename,
+      </if>
+      <if test="logoUrl != null" >
+        logo_url,
+      </if>
+      <if test="brandAbbr != null" >
+        brand_abbr,
+      </if>
+      <if test="brandStory != null" >
+        brand_story,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createByName != null" >
+        create_by_name,
+      </if>
+      <if test="pinyin != null" >
+        pinyin,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="brandId != null" >
+        #{brandId,jdbcType=DECIMAL},
+      </if>
+      <if test="brandName != null" >
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandEname != null" >
+        #{brandEname,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="brandAbbr != null" >
+        #{brandAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="brandStory != null" >
+        #{brandStory,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createByName != null" >
+        #{createByName,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null" >
+        #{pinyin,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByBrandId" parameterType="com.hhf.model.product.Brand">
+    update T_BRAND
+    set BRAND_NAME = #{brandName,jdbcType=VARCHAR},
+        BRAND_ENAME = #{brandEname,jdbcType=VARCHAR},
+        LOGO_URL = #{logoUrl,jdbcType=VARCHAR},
+        BRAND_ABBR = #{brandAbbr,jdbcType=VARCHAR},
+        BRAND_STORY = #{brandStory,jdbcType=VARCHAR}
+      <if test="createDate != null">
+        ,CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="status != null">
+        ,STATUS = #{status,jdbcType=CHAR}
+      </if>
+      <if test="createByName != null">
+        ,CREATE_BY_NAME = #{createByName,jdbcType=VARCHAR}
+      </if>
+      <if test="pinyin != null">
+        ,PINYIN = #{pinyin,jdbcType=VARCHAR}
+      </if>
+    where BRAND_ID = #{brandId,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="getBrandByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_BRAND
+    <where> 
+		<if test="brandName!=null and brandName!=''">  
+			BRAND_NAME = #{brandName,jdbcType=VARCHAR}
+		</if>
+		<if test="brandEname!=null and brandEname!=''">  
+			LOWER(BRAND_ENAME) = #{brandEname,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			and STATUS = #{status,jdbcType=CHAR}
+		</if>
+	</where>
+  </select>
+  
+  <select id="getBrandsByPage" resultMap="BaseResultMap"> 
+	select 
+    <include refid="Base_Column_List" />
+    from T_BRAND
+    <where> 
+		<if test="cond.brandName != null and cond.brandName!=''" >
+			<bind name="brandName" value="'%' + cond.brandName + '%'" />
+			BRAND_NAME LIKE #{brandName} 
+		</if>
+		<if test="cond.brandEname!=null and cond.brandEname!=''">  
+			<bind name="brandEname" value="'%' + cond.brandEname + '%'" />
+			and LOWER(BRAND_ENAME) LIKE #{brandEname} 
+		</if>
+		<if test="cond.startDt != null" >
+		 	and CREATE_DATE &gt;= #{cond.startDt,jdbcType=TIMESTAMP}
+	    </if>
+	    <if test="cond.endDt != null" >
+		 	and CREATE_DATE &lt;= #{cond.endDt,jdbcType=TIMESTAMP}
+	    </if>
+		<if test="cond.status != null">
+			and STATUS = #{cond.status,jdbcType=CHAR}
+		</if>
+		<if test="cond.createDate != null">
+			ORDER BY BRAND_ID ${cond.createDate}
+		</if>
+	</where>
+  </select>
+  
+  <select id="getBrandsByName" resultMap="BaseResultMap"> 
+	select 
+    <include refid="Base_Column_List" />
+    from T_BRAND
+    <where> 
+		<if test="name!=null and name!=''" >
+			<bind name="name" value="'%' + name + '%'" />
+			(BRAND_NAME LIKE #{name} or LOWER(BRAND_ENAME) LIKE #{name}) and STATUS = 1
+		</if>
+		ORDER BY BRAND_ID
+	</where>
+  </select>
+  
+</mapper>

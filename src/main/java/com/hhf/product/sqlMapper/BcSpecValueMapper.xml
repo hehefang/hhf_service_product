@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhf.product.dao.BcSpecValueMapper" >
+  <resultMap id="BaseResultMap" type="com.hhf.model.product.BcSpecValue" >
+    <id column="bc_sv_id" property="bcSvId" jdbcType="DECIMAL" />
+    <result column="bc_spec_id" property="bcSpecId" jdbcType="DECIMAL" />
+    <result column="spec_value_id" property="specValueId" jdbcType="DECIMAL" />
+    <result column="spec_value_name" property="specValueName" jdbcType="VARCHAR" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="display_order" property="displayOrder" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="bc_id" property="bcId" jdbcType="SMALLINT" />
+    <result column="is_filter" property="isFilter" jdbcType="CHAR" />
+    <result column="is_mobile_display" property="isMobileDisplay" jdbcType="CHAR" />
+    <result column="m_display_position" property="mDisplayPosition" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    bc_sv_id, bc_spec_id, spec_value_id, spec_value_name, img_url, display_order, status, 
+    bc_id, is_filter, is_mobile_display, m_display_position
+  </sql>
+  
+  <select id="getBcSpecValueById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_bc_spec_value
+    where bc_sv_id = #{bcSvId,jdbcType=DECIMAL}
+  </select>
+  
+  <delete id="deleteBcSpecValueById" parameterType="java.lang.Long" >
+  	update T_BC_SPEC_VALUE
+    set STATUS = '0'
+    where BC_SV_ID = #{bcSvId,jdbcType=DECIMAL}
+  </delete>
+  
+  <delete id="deleteBcSpecValueByBcSpecId" parameterType="java.lang.Long">
+      update T_BC_SPEC_VALUE
+      set STATUS = '0'
+      where BC_SPEC_ID = #{bcSpecId,jdbcType=DECIMAL}
+  </delete>
+  
+  <insert id="insertBcSpecValue" parameterType="com.hhf.model.product.BcSpecValue" useGeneratedKeys="true" keyProperty="bcSvId" >
+    insert into t_bc_spec_value (bc_spec_id, spec_value_id, 
+      spec_value_name, img_url, display_order, 
+      status, bc_id, is_filter, 
+      is_mobile_display, m_display_position)
+    values (#{bcSpecId,jdbcType=DECIMAL}, #{specValueId,jdbcType=DECIMAL}, 
+      #{specValueName,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, #{displayOrder,jdbcType=DECIMAL}, 
+      #{status,jdbcType=CHAR}, #{bcId,jdbcType=SMALLINT}, #{isFilter,jdbcType=CHAR}, 
+      #{isMobileDisplay,jdbcType=CHAR}, #{mDisplayPosition,jdbcType=DECIMAL})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.hhf.model.product.BcSpecValue" >
+    insert into t_bc_spec_value
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bcSvId != null" >
+        bc_sv_id,
+      </if>
+      <if test="bcSpecId != null" >
+        bc_spec_id,
+      </if>
+      <if test="specValueId != null" >
+        spec_value_id,
+      </if>
+      <if test="specValueName != null" >
+        spec_value_name,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="displayOrder != null" >
+        display_order,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="bcId != null" >
+        bc_id,
+      </if>
+      <if test="isFilter != null" >
+        is_filter,
+      </if>
+      <if test="isMobileDisplay != null" >
+        is_mobile_display,
+      </if>
+      <if test="mDisplayPosition != null" >
+        m_display_position,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bcSvId != null" >
+        #{bcSvId,jdbcType=DECIMAL},
+      </if>
+      <if test="bcSpecId != null" >
+        #{bcSpecId,jdbcType=DECIMAL},
+      </if>
+      <if test="specValueId != null" >
+        #{specValueId,jdbcType=DECIMAL},
+      </if>
+      <if test="specValueName != null" >
+        #{specValueName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="bcId != null" >
+        #{bcId,jdbcType=SMALLINT},
+      </if>
+      <if test="isFilter != null" >
+        #{isFilter,jdbcType=CHAR},
+      </if>
+      <if test="isMobileDisplay != null" >
+        #{isMobileDisplay,jdbcType=CHAR},
+      </if>
+      <if test="mDisplayPosition != null" >
+        #{mDisplayPosition,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateBcSpecValueById" parameterType="com.hhf.model.product.BcSpecValue" >
+    update t_bc_spec_value
+    <set >
+      <if test="bcSpecId != null" >
+        bc_spec_id = #{bcSpecId,jdbcType=DECIMAL},
+      </if>
+      <if test="specValueId != null" >
+        spec_value_id = #{specValueId,jdbcType=DECIMAL},
+      </if>
+      <if test="specValueName != null" >
+        spec_value_name = #{specValueName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null" >
+        display_order = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="bcId != null" >
+        bc_id = #{bcId,jdbcType=SMALLINT},
+      </if>
+      <if test="isFilter != null" >
+        is_filter = #{isFilter,jdbcType=CHAR},
+      </if>
+      <if test="isMobileDisplay != null" >
+        is_mobile_display = #{isMobileDisplay,jdbcType=CHAR},
+      </if>
+      <if test="mDisplayPosition != null" >
+        m_display_position = #{mDisplayPosition,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where bc_sv_id = #{bcSvId,jdbcType=DECIMAL}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.hhf.model.product.BcSpecValue" >
+    update t_bc_spec_value
+    set bc_spec_id = #{bcSpecId,jdbcType=DECIMAL},
+      spec_value_id = #{specValueId,jdbcType=DECIMAL},
+      spec_value_name = #{specValueName,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      display_order = #{displayOrder,jdbcType=DECIMAL},
+      status = #{status,jdbcType=CHAR},
+      bc_id = #{bcId,jdbcType=SMALLINT},
+      is_filter = #{isFilter,jdbcType=CHAR},
+      is_mobile_display = #{isMobileDisplay,jdbcType=CHAR},
+      m_display_position = #{mDisplayPosition,jdbcType=DECIMAL}
+    where bc_sv_id = #{bcSvId,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="getBcSpecValueBySpecValueId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_BC_SPEC_VALUE
+    <where> 
+    	<if test="specValueId != null">
+			SPEC_VALUE_ID = #{specValueId,jdbcType=DECIMAL}
+		</if>
+		<if test="status != null">
+			and STATUS = #{status,jdbcType=CHAR}
+		</if>
+	</where>
+	order by DISPLAY_ORDER
+  </select>
+  
+  <update id="updateBcSpecValueBySpecValueId">
+      update T_BC_SPEC_VALUE
+      <set>
+          SPEC_VALUE_NAME = #{specValueName,jdbcType=VARCHAR},
+          IMG_URL = #{imgUrl,jdbcType=VARCHAR}
+      </set>
+      where SPEC_VALUE_ID = #{specValueId,jdbcType=DECIMAL}
+  </update>
+  
+  <update id="updateBcSpecValueOrders" >
+    update T_BC_SPEC_VALUE
+    set DISPLAY_ORDER = DISPLAY_ORDER + (#{value})
+    where BC_SPEC_ID = #{bcSpecId,jdbcType=DECIMAL} and 
+    <choose>
+		<when test="value &gt; 0">
+			DISPLAY_ORDER &lt; #{order} 
+		</when>
+		<when test="value &lt; 0">
+			DISPLAY_ORDER &gt; #{order} 
+		</when>
+	</choose>
+	 and STATUS=1
+  </update>
+  
+  <select id="getBcSpecValueByBcSpecId" resultMap="BaseResultMap">
+    select bcsv.BC_SV_ID, bcsv.BC_SPEC_ID, bcsv.SPEC_VALUE_NAME, bcsv.IMG_URL, 
+    bcsv.DISPLAY_ORDER, bcsv.STATUS, bcsv.SPEC_VALUE_ID, 
+    bcsv.BC_ID, bcsv.IS_FILTER, bcsv.IS_MOBILE_DISPLAY, bcsv.M_DISPLAY_POSITION
+    from T_BC_SPEC_VALUE bcsv
+    <where> 
+    	<if test="bcSpecId != null">
+			bcsv.BC_SPEC_ID = #{bcSpecId,jdbcType=DECIMAL}
+		</if>
+		<if test="status != null">
+			and bcsv.STATUS = #{status,jdbcType=CHAR}
+		</if>
+	</where>
+	order by bcsv.DISPLAY_ORDER
+  </select>
+  
+</mapper>

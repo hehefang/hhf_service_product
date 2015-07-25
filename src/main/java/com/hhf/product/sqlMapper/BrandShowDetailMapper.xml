@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhf.product.dao.BrandShowDetailMapper">
+  <resultMap id="BaseResultMap" type="com.hhf.model.product.BrandShowDetail">
+    <id column="b_s_d_id" jdbcType="INTEGER" property="bSDId" />
+    <result column="brand_show_id" jdbcType="INTEGER" property="brandShowId" />
+    <result column="prod_id" jdbcType="INTEGER" property="prodId" />
+    <result column="prod_code" jdbcType="VARCHAR" property="prodCode" />
+    <result column="sku_code" jdbcType="VARCHAR" property="skuCode" />
+    <result column="sku_id" jdbcType="INTEGER" property="skuId" />
+    <result column="prod_name" jdbcType="VARCHAR" property="prodName" />
+    <result column="prod_title" jdbcType="VARCHAR" property="prodTitle" />
+    <result column="prod_img" jdbcType="VARCHAR" property="prodImg" />
+    <result column="sku_spec_name" jdbcType="VARCHAR" property="skuSpecName" />
+    <result column="show_price" jdbcType="DECIMAL" property="showPrice" />
+    <result column="show_balance" jdbcType="INTEGER" property="showBalance" />
+    <result column="sale_amount" jdbcType="INTEGER" property="saleAmount" />
+    <result column="purchase_count_limit" jdbcType="SMALLINT" property="purchaseCountLimit" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="create_by_date" jdbcType="TIMESTAMP" property="createByDate" />
+    <result column="create_by_name" jdbcType="VARCHAR" property="createByName" />
+    <result column="remove_date" jdbcType="TIMESTAMP" property="removeDate" />
+    <result column="org_price" jdbcType="DECIMAL" property="orgPrice" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="art_no" jdbcType="VARCHAR" property="artNo" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    b_s_d_id, brand_show_id, prod_id, prod_code, sku_code, sku_id, prod_name, prod_title, 
+    prod_img, sku_spec_name, show_price, show_balance, sale_amount, purchase_count_limit, 
+    start_date, end_date, status, create_by_date, create_by_name, remove_date, org_price, 
+    discount, art_no, brand_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_brand_show_detail
+    where b_s_d_id = #{bSDId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_brand_show_detail
+    where b_s_d_id = #{bSDId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hhf.model.product.BrandShowDetail" useGeneratedKeys="true" keyProperty="bSDId">
+    insert into t_brand_show_detail (brand_show_id, prod_id, 
+      prod_code, sku_code, sku_id, 
+      prod_name, prod_title, prod_img, 
+      sku_spec_name, show_price, show_balance, 
+      sale_amount, purchase_count_limit, start_date, 
+      end_date, status, create_by_date, 
+      create_by_name, remove_date, org_price, 
+      discount, art_no, brand_name)
+    values (#{brandShowId,jdbcType=INTEGER}, #{prodId,jdbcType=INTEGER}, 
+      #{prodCode,jdbcType=VARCHAR}, #{skuCode,jdbcType=VARCHAR}, #{skuId,jdbcType=INTEGER}, 
+      #{prodName,jdbcType=VARCHAR}, #{prodTitle,jdbcType=VARCHAR}, #{prodImg,jdbcType=VARCHAR}, 
+      #{skuSpecName,jdbcType=VARCHAR}, #{showPrice,jdbcType=DECIMAL}, #{showBalance,jdbcType=INTEGER}, 
+      #{saleAmount,jdbcType=INTEGER}, #{purchaseCountLimit,jdbcType=SMALLINT}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{createByDate,jdbcType=TIMESTAMP}, 
+      #{createByName,jdbcType=VARCHAR}, #{removeDate,jdbcType=TIMESTAMP}, #{orgPrice,jdbcType=DECIMAL}, 
+      #{discount,jdbcType=DECIMAL}, #{artNo,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hhf.model.product.BrandShowDetail" useGeneratedKeys="true" keyProperty="bSDId">
+    insert into t_brand_show_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">      
+      <if test="brandShowId != null">
+        brand_show_id,
+      </if>
+      <if test="prodId != null">
+        prod_id,
+      </if>
+      <if test="prodCode != null">
+        prod_code,
+      </if>
+      <if test="skuCode != null">
+        sku_code,
+      </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
+      <if test="prodName != null">
+        prod_name,
+      </if>
+      <if test="prodTitle != null">
+        prod_title,
+      </if>
+      <if test="prodImg != null">
+        prod_img,
+      </if>
+      <if test="skuSpecName != null">
+        sku_spec_name,
+      </if>
+      <if test="showPrice != null">
+        show_price,
+      </if>
+      <if test="showBalance != null">
+        show_balance,
+      </if>
+      <if test="saleAmount != null">
+        sale_amount,
+      </if>
+      <if test="purchaseCountLimit != null">
+        purchase_count_limit,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createByDate != null">
+        create_by_date,
+      </if>
+      <if test="createByName != null">
+        create_by_name,
+      </if>
+      <if test="removeDate != null">
+        remove_date,
+      </if>
+      <if test="orgPrice != null">
+        org_price,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="artNo != null">
+        artNo,
+      </if>
+      <if test="brandName != null">
+        brand_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">     
+      <if test="brandShowId != null">
+        #{brandShowId,jdbcType=INTEGER},
+      </if>
+      <if test="prodId != null">
+        #{prodId,jdbcType=INTEGER},
+      </if>
+      <if test="prodCode != null">
+        #{prodCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null">
+        #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=INTEGER},
+      </if>
+      <if test="prodName != null">
+        #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="prodTitle != null">
+        #{prodTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="prodImg != null">
+        #{prodImg,jdbcType=VARCHAR},
+      </if>
+      <if test="skuSpecName != null">
+        #{skuSpecName,jdbcType=VARCHAR},
+      </if>
+      <if test="showPrice != null">
+        #{showPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="showBalance != null">
+        #{showBalance,jdbcType=INTEGER},
+      </if>
+      <if test="saleAmount != null">
+        #{saleAmount,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseCountLimit != null">
+        #{purchaseCountLimit,jdbcType=SMALLINT},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createByDate != null">
+        #{createByDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createByName != null">
+        #{createByName,jdbcType=VARCHAR},
+      </if>
+      <if test="removeDate != null">
+        #{removeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgPrice != null">
+        #{orgPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="artNo != null">
+        #{artNo,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null">
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hhf.model.product.BrandShowDetail">
+    update t_brand_show_detail
+    <set>
+      <if test="brandShowId != null">
+        brand_show_id = #{brandShowId,jdbcType=INTEGER},
+      </if>
+      <if test="prodId != null">
+        prod_id = #{prodId,jdbcType=INTEGER},
+      </if>
+      <if test="prodCode != null">
+        prod_code = #{prodCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null">
+        sku_code = #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuId != null">
+        sku_id = #{skuId,jdbcType=INTEGER},
+      </if>
+      <if test="prodName != null">
+        prod_name = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="prodTitle != null">
+        prod_title = #{prodTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="prodImg != null">
+        prod_img = #{prodImg,jdbcType=VARCHAR},
+      </if>
+      <if test="skuSpecName != null">
+        sku_spec_name = #{skuSpecName,jdbcType=VARCHAR},
+      </if>
+      <if test="showPrice != null">
+        show_price = #{showPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="showBalance != null">
+        show_balance = #{showBalance,jdbcType=INTEGER},
+      </if>
+      <if test="saleAmount != null">
+        sale_amount = #{saleAmount,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseCountLimit != null">
+        purchase_count_limit = #{purchaseCountLimit,jdbcType=SMALLINT},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createByDate != null">
+        create_by_date = #{createByDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createByName != null">
+        create_by_name = #{createByName,jdbcType=VARCHAR},
+      </if>
+      <if test="removeDate != null">
+        remove_date = #{removeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgPrice != null">
+        org_price = #{orgPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="artNo != null">
+        art_no = #{artNo,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null">
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where b_s_d_id = #{bSDId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hhf.model.product.BrandShowDetail">
+    update t_brand_show_detail
+    set brand_show_id = #{brandShowId,jdbcType=INTEGER},
+      prod_id = #{prodId,jdbcType=INTEGER},
+      prod_code = #{prodCode,jdbcType=VARCHAR},
+      sku_code = #{skuCode,jdbcType=VARCHAR},
+      sku_id = #{skuId,jdbcType=INTEGER},
+      prod_name = #{prodName,jdbcType=VARCHAR},
+      prod_title = #{prodTitle,jdbcType=VARCHAR},
+      prod_img = #{prodImg,jdbcType=VARCHAR},
+      sku_spec_name = #{skuSpecName,jdbcType=VARCHAR},
+      show_price = #{showPrice,jdbcType=DECIMAL},
+      show_balance = #{showBalance,jdbcType=INTEGER},
+      sale_amount = #{saleAmount,jdbcType=INTEGER},
+      purchase_count_limit = #{purchaseCountLimit,jdbcType=SMALLINT},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=CHAR},
+      create_by_date = #{createByDate,jdbcType=TIMESTAMP},
+      create_by_name = #{createByName,jdbcType=VARCHAR},
+      remove_date = #{removeDate,jdbcType=TIMESTAMP},
+      org_price = #{orgPrice,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=DECIMAL},
+      art_no = #{artNo,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR}
+    where b_s_d_id = #{bSDId,jdbcType=INTEGER}
+  </update>
+    
+  <select id="getBrandShowDetailsByIds" resultMap="BaseResultMap">
+    select
+	<include refid="Base_Column_List" />
+	from t_brand_show_detail
+	where b_s_d_id in 
+	<foreach close=")" collection="brandShowDetailIds" item="brandShowDetailId" open="(" separator=",">
+		#{brandShowDetailId}
+	</foreach>
+  </select>
+  
+  <select id="getValidDetailsOfBrandShow" resultMap="BaseResultMap">
+    select
+	<include refid="Base_Column_List" />
+	from t_brand_show_detail
+	where brand_show_id = #{0,jdbcType=INTEGER}
+		and status = '1'
+  </select>
+  
+  <select id="getLowestPrice" parameterType="java.lang.Integer" resultType="java.math.BigDecimal">
+  select
+	min(show_price)
+	from t_brand_show_detail
+	where  brand_show_id = #{bsid}
+  </select>
+  
+  <select id="getBrandShowDetailByPage" resultMap="BaseResultMap">
+  select
+	<include refid="Base_Column_List" />
+	from t_brand_show_detail
+	<where>
+	<if test="cond.bsid != null">
+			 brand_show_id = #{cond.bsid,jdbcType=DECIMAL}
+    </if>
+	</where>
+  </select>
+  <update id="addStock">
+      update t_brand_show_detail t
+      set t.sale_amount = case when t.sale_amount is null then -#{stock,jdbcType=DECIMAL} 
+   									else t.sale_amount - #{stock,jdbcType=DECIMAL} 
+   								end
+		where t.b_s_d_id = #{bsdId,jdbcType=DECIMAL}
+  </update>
+  
+<select id="getBrandShowDetailBySkuId" resultMap="BaseResultMap">
+  select
+	<include refid="Base_Column_List" />
+	from t_brand_show_detail
+	<where>
+	<if test="brandShowId != null">
+			 brand_show_id = #{brandShowId,jdbcType=DECIMAL}
+    </if>
+    <if test="skuId != null">
+		and	 sku_id = #{skuId,jdbcType=DECIMAL}
+    </if>
+	</where>
+  </select> 
+  
+  <select id="getBrandShowDetailsByProdId" resultMap="BaseResultMap">
+  select
+	<include refid="Base_Column_List" />
+	from t_brand_show_detail
+	<where>
+	<if test="brandShowId != null">
+			 brand_show_id = #{brandShowId,jdbcType=DECIMAL}
+    </if>
+    <if test="prodId != null">
+		and	 prod_id = #{prodId,jdbcType=DECIMAL}
+    </if>
+	</where>
+  </select> 
+</mapper>

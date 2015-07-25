@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhf.product.dao.SellerBrandMapper" >
+  <resultMap id="BaseResultMap" type="com.hhf.model.product.SellerBrand" >
+    <id column="seller_brand_id" property="sellerBrandId" jdbcType="INTEGER" />
+    <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
+    <result column="brand_id" property="brandId" jdbcType="INTEGER" />
+    <result column="submit_date" property="submitDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="audit_status" property="auditStatus" jdbcType="CHAR" />
+    <result column="audit_date" property="auditDate" jdbcType="TIMESTAMP" />
+    <result column="audit_by_name" property="auditByName" jdbcType="VARCHAR" />
+    <result column="audit_content" property="auditContent" jdbcType="VARCHAR" />
+    <result column="auth_type" property="authType" jdbcType="CHAR" />
+    <result column="auth_start_date" property="authStartDate" jdbcType="TIMESTAMP" />
+    <result column="auth_end_date" property="authEndDate" jdbcType="TIMESTAMP" />
+    <result column="categories" property="categories" jdbcType="VARCHAR" />
+    <result column="trademark_cert" property="trademarkCert" jdbcType="VARCHAR" />
+    <result column="other_cert" property="otherCert" jdbcType="VARCHAR" />
+    <result column="auth_cert" property="authCert" jdbcType="VARCHAR" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="co_name" property="coName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    seller_brand_id, seller_id, brand_id, submit_date, status, audit_status, audit_date, 
+    audit_by_name, audit_content, auth_type, auth_start_date, auth_end_date, categories, trademark_cert, 
+    other_cert, auth_cert, login_name, co_name
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_seller_brand
+    where seller_brand_id = #{sellerBrandId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_seller_brand
+    where seller_brand_id = #{sellerBrandId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.hhf.model.product.SellerBrand" useGeneratedKeys="true" keyProperty="sellerBrandId" >
+    insert into t_seller_brand (seller_id, brand_id, 
+      submit_date, status, audit_status, 
+      audit_date, audit_by_name, audit_content, auth_type, 
+      auth_start_date, auth_end_date, categories, 
+      trademark_cert, other_cert, auth_cert, login_name, co_name
+      )
+    values (#{sellerId,jdbcType=INTEGER}, #{brandId,jdbcType=INTEGER}, 
+      #{submitDate,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{auditStatus,jdbcType=CHAR}, 
+      #{auditDate,jdbcType=TIMESTAMP}, #{auditByName,jdbcType=VARCHAR}, #{auditContent,jdbcType=VARCHAR}, #{authType,jdbcType=CHAR},  
+      #{authStartDate,jdbcType=TIMESTAMP}, #{authEndDate,jdbcType=TIMESTAMP}, #{categories,jdbcType=VARCHAR}, 
+      #{trademarkCert,jdbcType=VARCHAR}, #{otherCert,jdbcType=VARCHAR}, #{authCert,jdbcType=VARCHAR},
+      #{loginName,jdbcType=VARCHAR}, #{coName,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.hhf.model.product.SellerBrand" >
+    update t_seller_brand
+    set seller_id = #{sellerId,jdbcType=INTEGER},
+      brand_id = #{brandId,jdbcType=INTEGER},
+      submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=CHAR},
+      audit_status = #{auditStatus,jdbcType=CHAR},
+      audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      audit_by_name = #{auditByName,jdbcType=VARCHAR},
+      audit_content = #{auditContent,jdbcType=VARCHAR},
+      auth_type = #{authType,jdbcType=CHAR},
+      auth_start_date = #{authStartDate,jdbcType=TIMESTAMP},
+      auth_end_date = #{authEndDate,jdbcType=TIMESTAMP},
+      categories = #{categories,jdbcType=VARCHAR},
+      trademark_cert = #{trademarkCert,jdbcType=VARCHAR},
+      other_cert = #{otherCert,jdbcType=VARCHAR},
+      auth_cert = #{authCert,jdbcType=VARCHAR},
+      login_name = #{loginName,jdbcType=VARCHAR},
+      co_name = #{coName,jdbcType=VARCHAR}
+    where seller_brand_id = #{sellerBrandId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.hhf.model.product.SellerBrand" >
+    update t_seller_brand
+    <set >
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null" >
+        brand_id = #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="submitDate != null" >
+        submit_date = #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="auditStatus != null" >
+        audit_status = #{auditStatus,jdbcType=CHAR},
+      </if>
+      <if test="auditDate != null" >
+        audit_date = #{auditDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditByName != null" >
+        audit_by_name = #{auditByName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditContent != null" >
+        audit_content = #{auditContent,jdbcType=VARCHAR},
+      </if>
+      <if test="authType != null" >
+        auth_type = #{authType,jdbcType=CHAR},
+      </if>
+      <if test="authStartDate != null" >
+        auth_start_date = #{authStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authEndDate != null" >
+        auth_end_date = #{authEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="categories != null" >
+        categories = #{categories,jdbcType=VARCHAR},
+      </if>
+      <if test="trademarkCert != null" >
+        trademark_cert = #{trademarkCert,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCert != null" >
+        other_cert = #{otherCert,jdbcType=VARCHAR},
+      </if>
+      <if test="authCert != null" >
+        auth_cert = #{authCert,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="coName != null" >
+        co_name = #{coName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where seller_brand_id = #{sellerBrandId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 扩展 -->
+  <select id="getSellerBrandByBrandId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_seller_brand
+    <where> 
+		<if test="brandId!=null and brandId>0">  
+			brand_id = #{brandId,jdbcType=DECIMAL}
+		</if>
+		<if test="status!=null and status!=''">  
+			and status = #{status,jdbcType=CHAR}
+		</if>
+	</where>
+  </select>
+  
+  <select id="selectValidBrandOfSeller" resultMap="com.hhf.product.dao.BrandMapper.BaseResultMap">
+    select 
+    <include refid="com.hhf.product.dao.BrandMapper.Base_Column_List" />
+    from t_brand
+    where exists
+    	(select 1 
+    		from t_seller_brand 
+    		where t_seller_brand.brand_id = t_brand.brand_id 
+    			and t_seller_brand.seller_id = #{sellerId,jdbcType=INTEGER}
+    			and t_seller_brand.status = '1'
+    	)
+  </select>
+  
+  <resultMap id="ExtResultMap" extends="BaseResultMap" type="com.hhf.model.product.SellerBrand">
+  	<result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    <result column="brand_ename" property="brandEname" jdbcType="VARCHAR" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="brand_abbr" property="brandAbbr" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectSellerBrandList" resultMap="ExtResultMap">
+    select 
+    	t1.seller_brand_id, t1.seller_id, t1.brand_id, t1.submit_date, t1.status, t1.audit_status, t1.audit_date, 
+	    t1.audit_by_name, t1.audit_content, t1.auth_type, t1.auth_start_date, t1.auth_end_date, t1.categories, t1.trademark_cert, 
+	    t1.other_cert, t1.auth_cert, t1.login_name, t1.co_name, 
+	    t2.brand_name, t2.brand_ename, t2.logo_url, t2.brand_abbr
+    from t_seller_brand t1, t_brand t2
+    where t1.brand_id = t2.brand_id
+    	and t1.seller_id = #{sellerId,jdbcType=INTEGER}
+    	and t1.status != '0'
+    order by t1.seller_brand_id desc
+  </select>
+  
+  <select id="queryWaitAurditApplyByPage" resultMap="ExtResultMap">
+    select 
+    	t1.seller_brand_id, t1.seller_id, t1.brand_id, t1.submit_date, t1.status, t1.audit_status, t1.audit_date, 
+	    t1.audit_by_name, t1.audit_content, t1.auth_type, t1.auth_start_date, t1.auth_end_date, t1.categories, t1.trademark_cert, 
+	    t1.other_cert, t1.auth_cert, t1.login_name, t1.co_name, 
+	    t2.brand_name, t2.brand_ename, t2.logo_url, t2.brand_abbr
+    from t_seller_brand t1, t_brand t2
+    where t1.brand_id = t2.brand_id
+    	and t1.status = '2'
+    	<if test="cond.loginName != null" >
+		 	 <bind name="loginName" value="'%' + cond.loginName + '%'" />
+		 	 and t1.login_name like #{loginName,jdbcType=VARCHAR} 
+		</if>
+		<if test="cond.coName != null" >
+		 	 <bind name="coName" value="'%' + cond.coName + '%'" />
+		 	 and t1.co_name like #{coName,jdbcType=VARCHAR} 
+		</if>
+		<if test="cond.brandName != null" >
+		 	 <bind name="brandName" value="'%' + cond.brandName + '%'" />
+		 	 and (t2.brand_name like #{brandName,jdbcType=VARCHAR} 
+		 	 	or t2.brand_ename like #{brandName,jdbcType=VARCHAR} 
+		 	 	)
+		</if>
+		<if test="cond.startDt != null" >
+		 	 and t1.submit_date &gt;= #{cond.startDt,jdbcType=TIMESTAMP}
+	    </if>
+	    <if test="cond.endDt != null" >
+		 	 and t1.submit_date &lt; #{cond.endDt,jdbcType=TIMESTAMP}
+	    </if>
+    order by t1.submit_date desc
+  </select>
+ 
+</mapper>

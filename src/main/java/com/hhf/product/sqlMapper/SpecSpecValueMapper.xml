@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhf.product.dao.SpecSpecValueMapper" >
+  <resultMap id="BaseResultMap" type="com.hhf.model.product.SpecSpecValue" >
+    <id column="s_s_v_id" property="sSVId" jdbcType="DECIMAL" />
+    <result column="spec_id" property="specId" jdbcType="DECIMAL" />
+    <result column="spec_value_id" property="specValueId" jdbcType="DECIMAL" />
+    <result column="display_order" property="displayOrder" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <resultMap id="ExtResultMap" type="com.hhf.model.product.vo.SpecSpecValueVO" extends="BaseResultMap">
+    <result column="SPEC_VALUE_NAME" jdbcType="VARCHAR" property="specValueName" />
+    <result column="PINYIN" jdbcType="VARCHAR" property="pinyin" />
+    <result column="IMG_URL" jdbcType="VARCHAR" property="imgUrl" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    s_s_v_id, spec_id, spec_value_id, display_order
+  </sql>
+  
+  <select id="getSpecSpecValueById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_spec_spec_value
+    where s_s_v_id = #{sSVId,jdbcType=DECIMAL}
+  </select>
+  
+  <delete id="deleteSpecSpecValueById" parameterType="java.lang.Long" >
+    delete from t_spec_spec_value
+    where s_s_v_id = #{sSVId,jdbcType=DECIMAL}
+  </delete>
+  
+  <insert id="insertSpecSpecValue" parameterType="com.hhf.model.product.SpecSpecValue" useGeneratedKeys="true" keyProperty="sSVId" >
+    insert into t_spec_spec_value (spec_id, spec_value_id, 
+      display_order)
+    values (#{specId,jdbcType=DECIMAL}, #{specValueId,jdbcType=DECIMAL}, 
+      #{displayOrder,jdbcType=DECIMAL})
+  </insert>
+  
+  <delete id="deleteSpecSpecValuesById">
+    delete from T_SPEC_SPEC_VALUE
+    where S_S_V_ID in
+    <foreach item="item" index="index" collection="sSVIds" open="(" separator="," close=")">  
+		#{item}
+	</foreach>
+  </delete>
+  
+  <select id="getSpecSpecValueByspecId" parameterType="java.lang.Long" resultMap="ExtResultMap">
+    select ssv.S_S_V_ID, ssv.SPEC_ID, ssv.SPEC_VALUE_ID, ssv.DISPLAY_ORDER, sv.SPEC_VALUE_NAME, sv.PINYIN, sv.IMG_URL
+    from T_SPEC_SPEC_VALUE ssv, T_SPEC_VALUE sv
+    where ssv.SPEC_ID = #{specId,jdbcType=DECIMAL} and ssv.SPEC_VALUE_ID = sv.SPEC_VALUE_ID and sv.STATUS = '1'
+  </select>
+  
+  <select id="getSpecSpecValueBySpecIdAndSpecValueId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_SPEC_SPEC_VALUE
+    where SPEC_ID = #{specId,jdbcType=DECIMAL} and SPEC_VALUE_ID = #{specValueId,jdbcType=DECIMAL}
+  </select>
+  
+  <update id="updateSpecSpecOrderById">
+    update T_SPEC_SPEC_VALUE
+    set DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL}
+    where S_S_V_ID = #{sSVId,jdbcType=DECIMAL}
+  </update>
+  
+  <update id="updateSpecSpecOrders" >
+    update T_SPEC_SPEC_VALUE
+    set DISPLAY_ORDER = DISPLAY_ORDER + #{value}
+    where SPEC_ID = #{specId,jdbcType=DECIMAL} and 
+    <choose>
+		<when test="value &gt; 0">
+			DISPLAY_ORDER &lt; #{order}
+		</when>
+		<when test="value &lt; 0">
+			DISPLAY_ORDER &gt; #{order}
+		</when>
+	</choose>
+  </update>
+  
+  <delete id="deleteSpecSpecValueBySpecValueId" parameterType="java.lang.Long">
+    delete from T_SPEC_SPEC_VALUE
+    where SPEC_VALUE_ID = #{specValueId,jdbcType=DECIMAL}
+  </delete>
+  
+  <delete id="deleteSpecSpecValueBySpecId" parameterType="java.lang.Long">
+    delete from T_SPEC_SPEC_VALUE
+    where SPEC_ID = #{specId,jdbcType=DECIMAL}
+  </delete>
+  
+  
+</mapper>
